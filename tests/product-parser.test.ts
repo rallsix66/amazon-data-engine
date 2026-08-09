@@ -1,0 +1,3 @@
+import { describe, expect, it } from 'vitest'; import { readFileSync } from 'node:fs'; import { parseProductPage } from '../src/parser/product-parser.js';
+const fixture=readFileSync(new URL('./fixtures/product.html',import.meta.url),'utf8');
+describe('product parser',()=>{ it('normalizes required MVP fields',()=>{ const p=parseProductPage(fixture,'B0EXAMPLE01','US'); expect(p).toMatchObject({asin:'B0EXAMPLE01',title:'Example Serum',brand:'Example Brand',currentPrice:19.99,rating:4.6,reviewCount:1234}); }); it('classifies access challenges',()=>expect(()=>parseProductPage('robot check captcha','B0EXAMPLE01','US')).toThrow('CAPTCHA')); });
